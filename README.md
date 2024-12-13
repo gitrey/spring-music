@@ -1,9 +1,53 @@
-Spring Music
-============
+# Spring Music - Cloud Foundry Sample Application
 
-This is a sample application for using database services on [Cloud Foundry](http://cloudfoundry.org) with the [Spring Framework](http://spring.io) and [Spring Boot](http://projects.spring.io/spring-boot/).
+This repository provides a Spring Boot application showcasing the use of different database services on Cloud Foundry.
 
-This application has been built to store the same domain objects in one of a variety of different persistence technologies - relational, document, and key-value stores. This is not meant to represent a realistic use case for these technologies, since you would typically choose the one most applicable to the type of data you need to store, but it is useful for testing and experimenting with different types of services on Cloud Foundry.
+## Overview
 
-The application use Spring Java configuration and [bean profiles](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html) to configure the application and the connection objects needed to use the persistence stores. It also uses the [Java CFEnv](https://github.com/pivotal-cf/java-cfenv/) library to inspect the environment when running on Cloud Foundry. See the [Cloud Foundry documentation](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html) for details on configuring a Spring application for Cloud Foundry.
+The Spring Music application demonstrates how to connect to and store data in various database technologies, including:
+
+- **Relational Databases:** MySQL, PostgreSQL
+- **NoSQL Databases:** MongoDB, Redis
+
+The application stores the same domain objects (albums) in each database, enabling you to experiment with different persistence options.
+
+## Features
+
+- **Multiple Database Support:** Utilizes Spring Boot auto-configuration to seamlessly connect to different database services.
+- **Service Bindings:** Leverages Cloud Foundry service bindings to connect to the chosen database service.
+- **Bean Profiles:** Uses Spring profiles to activate configurations for the selected database technology.
+- **Cloud Foundry Environment:** Employs the Java CFEnv library to access and inspect the Cloud Foundry environment.
+- **Web Interface:** Provides a basic web application (built with AngularJS) to interact with the database and view album data.
+
+## Getting Started
+
+1. **Install Cloud Foundry:** Follow the instructions at [https://docs.cloudfoundry.org/](https://docs.cloudfoundry.org/) to install and configure Cloud Foundry.
+2. **Install Java:** Ensure that you have a supported version of Java (JDK 17+).
+3. **Clone Repository:** Clone this repository to your local machine.
+4. **Configure Database Services:**
+    - Create instances of the desired database service (e.g., `cf create-service <service-name> <plan>`) in your Cloud Foundry environment.
+    - Note the service names for use in the `manifest.yml` file.
+5. **Update `manifest.yml`:** Modify the `manifest.yml` file to include the created service names and set the `SPRING_PROFILES_ACTIVE` variable to the desired database profile (e.g., `mongodb`, `postgres`, `mysql`, `redis`).
+6. **Deploy to Cloud Foundry:** Push the application to Cloud Foundry using the `cf push` command.
+
+## Running Locally
+
+1. **Configure Database Connections:** If you don't have Cloud Foundry, set up the appropriate database connections locally (MySQL, PostgreSQL, MongoDB, Redis).
+2. **Update `application.yml`:** Adjust the `application.yml` file to match your local database connection settings.
+3. **Run the Application:** Execute the command `./gradlew bootRun` to launch the application.
+
+## Contributing
+
+Contributions are welcome! Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
+
+## License
+
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or feedback, please contact us at:
+
+- Email: support@cymbal.coffee
+- GitHub Issues: [link to GitHub repository]
 
