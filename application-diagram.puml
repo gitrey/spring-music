@@ -1,0 +1,37 @@
+@startuml
+component "Web Controllers" {
+  [AlbumController]
+  [InfoController]
+  [ErrorController]
+}
+
+package "Service Layer" {
+  [Album Service]
+}
+
+package "Repositories" {
+  [JpaAlbumRepository] <<profile: !mongodb & !redis>>
+  [MongoAlbumRepository] <<profile: mongodb>>
+  [RedisAlbumRepository] <<profile: redis>>
+}
+
+package "Domain" {
+  [Album]
+}
+
+database "Database (MySQL/Postgres)" <<profile: mysql | postgres>> {
+
+}
+
+cloud "Redis" <<profile: redis>> {
+
+}
+
+[Web Controllers] --> [Album Service]
+[Album Service] --> [Repositories]
+[Repositories] --> [Domain]
+[JpaAlbumRepository] --> [Database (MySQL/Postgres)]
+[MongoAlbumRepository] --> [Database (MySQL/Postgres)]
+[RedisAlbumRepository] --> [Redis]
+
+@enduml
