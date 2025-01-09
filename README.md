@@ -1,9 +1,92 @@
-Spring Music
-============
+## Spring Music: A Cloud Foundry Sample Application
 
-This is a sample application for using database services on [Cloud Foundry](http://cloudfoundry.org) with the [Spring Framework](http://spring.io) and [Spring Boot](http://projects.spring.io/spring-boot/).
+This repository contains a sample application demonstrating how to use database services on Cloud Foundry with the Spring Framework and Spring Boot. 
 
-This application has been built to store the same domain objects in one of a variety of different persistence technologies - relational, document, and key-value stores. This is not meant to represent a realistic use case for these technologies, since you would typically choose the one most applicable to the type of data you need to store, but it is useful for testing and experimenting with different types of services on Cloud Foundry.
+## Description
 
-The application use Spring Java configuration and [bean profiles](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html) to configure the application and the connection objects needed to use the persistence stores. It also uses the [Java CFEnv](https://github.com/pivotal-cf/java-cfenv/) library to inspect the environment when running on Cloud Foundry. See the [Cloud Foundry documentation](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html) for details on configuring a Spring application for Cloud Foundry.
+This application is designed to store the same domain objects in a variety of persistence technologies, including relational, document, and key-value stores. While not a realistic use case for these technologies, it's valuable for testing and experimenting with different service types on Cloud Foundry.
+
+**Technologies Used:**
+
+* Spring Framework
+* Spring Boot
+* Java CFEnv
+* Various persistence technologies (MySQL, PostgreSQL, MongoDB, Redis)
+
+## Installation
+
+1. **Prerequisites:**
+   - Java 17
+   - Git
+   - [Cloud Foundry CLI](https://docs.cloudfoundry.org/devguide/installcli.html)
+   - [Gradle](https://gradle.org/install/)
+
+2. **Clone the repository:**
+   ```bash
+   git clone https://github.com/gitrey/spring-music.git
+   cd spring-music
+   ```
+
+3. **Build the application:**
+   ```bash
+   ./gradlew build
+   ```
+
+4. **Push to Cloud Foundry:**
+   ```bash
+   cf push
+   ```
+
+**Note:** You'll need to have the necessary Cloud Foundry services (MySQL, PostgreSQL, MongoDB, or Redis) provisioned and bound to the application. See the [Cloud Foundry documentation](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html) for more details.
+
+## Running the Application
+
+Once deployed, you can access the application at the URL provided by `cf push`. 
+
+**Endpoints:**
+
+* `/albums`: Lists all albums.
+* `/albums/{id}`: Retrieves an album by ID.
+* `/albums`: Adds a new album (PUT request).
+* `/albums`: Updates an existing album (POST request).
+* `/albums/{id}`: Deletes an album by ID (DELETE request).
+* `/errors/kill`: Forces the application to exit.
+* `/errors/fill-heap`: Fills the heap with junk, triggering a crash.
+* `/errors/throw`: Throws a NullPointerException.
+* `/appinfo`: Provides information about the application, including active profiles and bound services.
+* `/service`: Shows details about the bound services.
+
+## Configuration
+
+The application uses Spring profiles and Java CFEnv to dynamically configure itself based on the bound services.
+
+* **Spring Profiles:** `mysql`, `postgres`, `mongodb`, `redis`
+* **Environment Variables:**
+    * `SPRING_PROFILES_ACTIVE`: Specifies the active profile.
+    * `JBP_CONFIG_OPEN_JDK_JRE`: Configures the Java version (set to 17+).
+    * `JBP_CONFIG_SPRING_AUTO_RECONFIGURATION`: Disables automatic reconfiguration (set to `'enabled: false'`).
+
+**To change the service type:**
+
+1. Unbind the current service from the application using `cf unbind-service <app-name> <service-name>`.
+2. Bind a new service using `cf bind-service <app-name> <service-name>`.
+3. Restart the application using `cf restart <app-name>`.
+
+## Contributing
+
+Contributions are welcome! Please follow the standard GitHub workflow:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes with clear and concise messages.
+4. Push your changes to your fork.
+5. Open a pull request against the `main` branch.
+
+## License
+
+This project is licensed under the Apache 2.0 License.
+
+## Contact
+
+For any questions or issues, please open an issue on the GitHub repository.
 
