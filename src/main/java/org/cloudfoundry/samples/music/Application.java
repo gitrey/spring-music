@@ -1,3 +1,4 @@
+// Copyright 2025
 package org.cloudfoundry.samples.music;
 
 import org.cloudfoundry.samples.music.config.SpringApplicationContextInitializer;
